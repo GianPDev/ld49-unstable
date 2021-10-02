@@ -28,5 +28,6 @@ func _ready() -> void:
 	join_channel(initial_channel)
 
 	# connect("cmd_no_permission", get_parent(), "no_permission")
-	connect("chat_message", get_parent(), "chat_message")
+	# connect("chat_message", get_parent(), "chat_message")
+	connect("chat_message", $"../Viewers", "chat_message")
 	
