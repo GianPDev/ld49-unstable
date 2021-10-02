@@ -1,4 +1,4 @@
-extends Control
+extends Node
 
 func chat_message(data : SenderData, msg : String) -> void:
 	$ChatContainer.put_chat(data, msg)

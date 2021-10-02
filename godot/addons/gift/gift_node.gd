@@ -1,5 +1,5 @@
 extends Node
-class_name Gift
+class_name Gift, "res://addons/gift/icon.png"
 
 # The underlying websocket sucessfully connected to twitch.
 signal twitch_connected

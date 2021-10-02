@@ -37,7 +37,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "CommandData": "",
 "CommandInfo": "",
-"Gift": "",
+"Gift": "res://addons/gift/icon.png",
 "ImageCache": "",
 "SenderData": ""
 }
@@ -45,7 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="ld49-unstable"
-run/main_scene="res://scenes/RapierScene.tscn"
+run/main_scene="res://scenes/Game.tscn"
 config/icon="res://assets/godot-ferris-32x32.png"
 
 [display]

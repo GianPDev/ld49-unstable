@@ -1,7 +1,7 @@
 extends VBoxContainer
 
 func put_chat(senderdata : SenderData, msg : String):
-	var msgnode : Control = preload("res://ChatMessage.tscn").instance()
+	var msgnode : Control = preload("res://scripts/ChatMessage.tscn").instance()
 	var time = OS.get_time()
 	var badges : String = ""
 	if ($"../Gift".image_cache):
@@ -20,6 +20,9 @@ func put_chat(senderdata : SenderData, msg : String):
 			msg = msg.substr(0, loc.start + offset) + emote_string + msg.substr(loc.end + offset + 1)
 			offset += emote_string.length() + loc.start - loc.end - 1
 	var bottom : bool = $Chat/ScrollContainer.scroll_vertical == $Chat/ScrollContainer.get_v_scrollbar().max_value - $Chat/ScrollContainer.get_v_scrollbar().rect_size.y
+	# var usrmsg : String = "[" + str(time["hour"]) + ":" + ("0" + str(time["minute"]) if time["minute"] < 10 else str(time["minute"])) + "]" + senderdata.tags["color"] + senderdata.tags["display-name"] + badges + ": " + msg;
+	var usrmsg : String = "[" + str(time["hour"]) + ":" + ("0" + str(time["minute"]) if time["minute"] < 10 else str(time["minute"])) + "]" + senderdata.tags["display-name"] + ": " + msg;
+	print(usrmsg);
 	msgnode.set_msg(str(time["hour"]) + ":" + ("0" + str(time["minute"]) if time["minute"] < 10 else str(time["minute"])), senderdata, msg, badges)
 	$Chat/ScrollContainer/ChatMessagesContainer.add_child(msgnode)
 	yield(get_tree(), "idle_frame")
