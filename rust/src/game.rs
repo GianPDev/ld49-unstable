@@ -1,13 +1,14 @@
 use gdnative::api::*;
 use gdnative::prelude::*;
 
-/// The Game "class"
 #[derive(NativeClass)]
 #[inherit(Node)]
 #[register_with(Self::register_builder)]
 pub struct Game {
     name: String,
 }
+
+//TODO Read twitch chat and give it to rust?
 
 // __One__ `impl` block can have the `#[methods]` attribute, which will generate
 // code to automatically bind any exported methods to Godot.
@@ -31,16 +32,18 @@ impl Game {
     // Instead they are "attached" to the parent object, called the "owner".
     // The owner is passed to every single exposed method.
     #[export]
-    unsafe fn _ready(&mut self, _owner: &Node) {
+    fn _ready(&mut self, _owner: &Node) {
         // The `godot_print!` macro works like `println!` but prints to the Godot-editor
         // output tab as well.
-        self.name = "Game".to_string();
+        self.name = "LD49_Unstable".to_string();
         godot_print!("{} is ready!", self.name);
+        
+        // handle_twitch_chat(ClientConfig::default());
     }
 
     // This function will be called in every frame
     #[export]
-    unsafe fn _process(&self, _owner: &Node, delta: f64) {
-        godot_print!("Inside {} _process(), delta is {}", self.name, delta);
+    fn _process(&self, _owner: &Node, delta: f64) {
+        // godot_print!("Inside {} _process(), delta is {}", self.name, delta);
     }
 }
