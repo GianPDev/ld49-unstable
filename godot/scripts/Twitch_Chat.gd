@@ -8,6 +8,7 @@ func _ready() -> void:
 	# <bot username>
 	# <oauth token>
 	# <initial channel>
+	get_images = true;
 	var authfile := File.new()
 	authfile.open("./auth", File.READ)
 	var botname := authfile.get_line()
@@ -29,5 +30,5 @@ func _ready() -> void:
 
 	# connect("cmd_no_permission", get_parent(), "no_permission")
 	# connect("chat_message", get_parent(), "chat_message")
-	connect("chat_message", $"../Viewers", "chat_message")
+	connect("chat_message", $"../ChatHandler", "chat_message")
 	

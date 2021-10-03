@@ -1,6 +1,27 @@
-extends VBoxContainer
+extends Node
 
-func put_chat(senderdata : SenderData, msg : String):
+
+# Declare member variables here. Examples:
+# var a = 2
+# var b = "text"
+
+# create struct that gets viewer and message
+var viewers = [];
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+#func _process(delta):
+#	pass
+
+#gets user when they chat if they are not already on the list
+# aka gets unique user
+func chat_message(senderdata : SenderData, msg : String) -> void:
+	# spawn bbcode text (add child to parent)
+	var label = RichTextLabel.new()
 	var msgnode : Control = preload("res://scripts/ChatMessage.tscn").instance()
 	var time = OS.get_time()
 	var badges : String = ""
@@ -41,3 +62,9 @@ class EmoteLocation extends Reference:
 
 	static func smaller(a : EmoteLocation, b : EmoteLocation):
 		return a.start < b.start
+	# call_deferred("add_child", Root)
+#	if !viewers.has(display_name) && viewers.size() < 100:
+#		viewers.append(display_name);
+#		print("added: " + display_name);
+#		print(viewers);
+#	print(display_name + ": " + msg);
