@@ -6,8 +6,8 @@ extends Node
 # var b = "text"
 
 # create struct that gets viewer and message
-var viewers = [];
-
+var viewers_shots = [];
+export (int) var bullet_per_viewer = 3
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -40,37 +40,36 @@ func chat_message(senderdata : SenderData, msg : String) -> void:
 			# print("emote_string: " + emote_string)
 			# msg = msg.substr(0, loc.start + offset) + emote_string + msg.substr(loc.end + offset + 1)
 			# msg = msg.substr(0, loc.start + offset) + emote_string + msg.substr(loc.end + offset + 1)
-			var msgnode : RigidBody2D = preload("res://scripts/EmoteShot.tscn").instance()
+			var msgnode : RigidBody2D = preload("res://scripts/EmoteEnemy.tscn").instance()
 			msgnode.set_msg(emote_string, boxsize)
-			msgnode.position = Vector2(150, 50);
+			msgnode.position = Vector2(150, 200);
 			call_deferred("add_child", msgnode)
 			# emotes += emote_string
 			# nonbbstring += "TEXT"
 			# boxsize.x += 28;
 			
-			# offset += emote_string.length() + loc.start - loc.end - 1
-	# msgnode.position = Vector2(150, 50);
-	# var usrmsg : String = "[" + str(time["hour"]) + ":" + ("0" + str(time["minute"]) if time["minute"] < 10 else str(time["minute"])) + "]" + senderdata.tags["color"] + senderdata.tags["display-name"] + badges + ": " + msg;
-	# msgnode.set_msg(str(time["hour"]) + ":" + ("0" + str(time["minute"]) if time["minute"] < 10 else str(time["minute"])), senderdata, msg, badges, nonbbstring)
-	# if (emotes != ""):
-		# call_deferred("add_child", msgnode)
-		# msgnode.set_msg(emotes, nonbbstring, boxsize)
-	# print(usrmsg)
-	var viewer_enemy:RigidBody2D = preload("res://scripts/ViewerEnemy.tscn").instance()
+	for i in range(bullet_per_viewer):
+		spawn_viewer(senderdata)
+
+func spawn_viewer(senderdata):
+	var viewer_shot:RigidBody2D = preload("res://scripts/ViewerShot.tscn").instance()
 	var time = OS.get_time()
 	var stamp = str(time["hour"]) + ":" + ("0" + str(time["minute"]) if time["minute"] < 10 else str(time["minute"]))
 	var display_name = stamp + "[b][color="+ senderdata.tags["color"] + "]" + senderdata.tags["display-name"] +"[/color][/b]"
 	# var display_name = senderdata.tags["display-name"];
-	if !viewers.has(display_name) && viewers.size() < 100:
-		viewers.append(display_name);
-		print("added: " + display_name);
-		print(viewers);
-	print(display_name + ": " + msg);
+	# if !viewers.has(display_name) && viewers.size() < 100:
+		# viewers.append(display_name);
+		# print("added: " + display_name);
+		# print(viewers);
+	# print(display_name + ": " + msg);
 	var nonbbstring = stamp + senderdata.tags["color"] + senderdata.tags["display-name"] + ":[]";
-	viewer_enemy.set_msg(stamp, senderdata, "", "", nonbbstring)
+	viewer_shot.set_msg(stamp, senderdata, "", "", nonbbstring)
 	
-	viewer_enemy.position = Vector2(150, 200);
-	call_deferred("add_child", viewer_enemy)
+	viewer_shot.position = Vector2(150, 50);
+	call_deferred("add_child", viewer_shot)
+	viewers_shots.append(viewer_shot)
+	print("Viewer Shots:")
+	print(viewers_shots)
 	
 class EmoteLocation extends Reference:
 	var id : String
