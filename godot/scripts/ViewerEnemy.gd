@@ -1,7 +1,11 @@
 extends RigidBody2D
 
+export (int) var speed = 200
+
+var velocity = Vector2()
+
 func set_msg(stamp : String, data : SenderData, msg : String, badges : String, nonbbstring : String) -> void:
-	$RichTextLabel.bbcode_text = stamp + "[b][color="+ data.tags["color"] + "]" + data.tags["display-name"] +"[/color][/b]: " + msg
+	$RichTextLabel.bbcode_text = stamp + "[b][color="+ data.tags["color"] + "]" + data.tags["display-name"] +"[/color][/b]"
 	# $RigidBody2D/Area2D/CollisionShape2D.shape.set_shape(new Shape2d());
 	var collisionShape = $CollisionShape2D # CollisionShape2D.new();
 	var shape = RectangleShape2D.new();
@@ -11,8 +15,14 @@ func set_msg(stamp : String, data : SenderData, msg : String, badges : String, n
 	size.x *= 0.5 
 	shape.extents = size/2
 	collisionShape.shape = shape
-	collisionShape.position += Vector2(size.x/2, size.y)
+	collisionShape.position += Vector2(size.x/2, size.y/2)
 	# self.add_child(collisionShape);
+	
+func _physics_process(delta):
+	#look_at(get_global_mouse_position())
+	# velocity = Vector2()
+	velocity = position.direction_to(get_global_mouse_position()) * speed
+	applied_force = velocity
 #func _ready():
 #	var rigidBody = RigidBody2D.new()
 #	# $"../RigidBody2D"
@@ -33,8 +43,3 @@ func set_msg(stamp : String, data : SenderData, msg : String, badges : String, n
 	# print("created new shape")
 	# print(text_shape);
 	# shape = text_shape
-
-func _physics_process(delta):
-	# look at player
-	# velocity move and slide
-	velocity = move_and_slide

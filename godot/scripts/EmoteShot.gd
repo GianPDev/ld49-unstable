@@ -1,17 +1,19 @@
 extends RigidBody2D
 
-func set_msg(stamp : String, data : SenderData, msg : String, badges : String, nonbbstring : String) -> void:
-	$RichTextLabel.bbcode_text = stamp + "[b][color="+ data.tags["color"] + "]" + data.tags["display-name"] +"[/color][/b]: " + msg
+func set_msg(emotes : String, boxsize : Vector2) -> void:
+	$RichTextLabel.bbcode_text = emotes;
 	# $RigidBody2D/Area2D/CollisionShape2D.shape.set_shape(new Shape2d());
 	var collisionShape = $CollisionShape2D # CollisionShape2D.new();
 	var shape = RectangleShape2D.new();
 	# get size without bbcode stuff to get proper size
 	# the length of the emote name is affecting the size
-	var size = $RichTextLabel.get_font("normal_font").get_string_size(nonbbstring)
-	size.x *= 0.5 
+	# var size = $RichTextLabel.get_font("normal_font").get_string_size(nonbbstring)
+	# var size = $RichTextLabel.rect_size;
+	#size.x *= 0.5 
+	var size = boxsize
 	shape.extents = size/2
 	collisionShape.shape = shape
-	collisionShape.position += Vector2(size.x/2, size.y)
+	collisionShape.position += Vector2(size.x/2, size.y/2)
 	# self.add_child(collisionShape);
 #func _ready():
 #	var rigidBody = RigidBody2D.new()
@@ -33,8 +35,3 @@ func set_msg(stamp : String, data : SenderData, msg : String, badges : String, n
 	# print("created new shape")
 	# print(text_shape);
 	# shape = text_shape
-
-func _physics_process(delta):
-	# look at player
-	# velocity move and slide
-	velocity = move_and_slide
