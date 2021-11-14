@@ -19,5 +19,3 @@ Setup, installation, configuration, etc.
 ```shell
 $ make run
 ```
-## Contact
-Gian P. <gianpdev@gmail.com>
